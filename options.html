@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--
+  ChatGPT Sidebar - Settings Page
+  
+  Configuration interface for managing custom prompts.
+  Features two-column layout for page and text selection prompts.
+  
+  @author toastyfawn566
+  @version 1.3.0
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT Sidebar Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header with title and action buttons -->
+    <header>
+      <h1>ChatGPT Sidebar Settings</h1>
+      <div class="header-actions">
+        <button class="btn btn-secondary btn-small" id="restore-defaults">Restore Defaults</button>
+        <button class="btn btn-secondary btn-small" id="open-trash">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+          Trash <span id="trash-count" class="badge hidden">0</span>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Global Settings -->
+    <section class="settings-section">
+      <h2>General Settings</h2>
+      <div class="setting-item">
+        <div class="setting-info">
+          <span class="setting-name">Auto-submit prompts</span>
+          <span class="setting-description">Automatically press Enter after pasting text into ChatGPT</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="auto-submit-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </section>
+    
+    <!-- Two-column layout for prompts -->
+    <main class="columns">
+      <!-- Page Prompts Column -->
+      <section class="column">
+        <div class="column-header">
+          <h2>Page Prompts</h2>
+          <button class="btn btn-primary btn-small" data-add="page">+ Add</button>
+        </div>
+        <p class="help-text">Right-click on any page</p>
+        <div class="prompts-list" id="page-prompts-list"></div>
+      </section>
+      
+      <!-- Text Selection Prompts Column -->
+      <section class="column">
+        <div class="column-header">
+          <h2>Text Selection Prompts</h2>
+          <button class="btn btn-primary btn-small" data-add="selection">+ Add</button>
+        </div>
+        <p class="help-text">Right-click on selected text</p>
+        <div class="prompts-list" id="selection-prompts-list"></div>
+      </section>
+    </main>
+    
+    <!-- Edit/Add Prompt Modal -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modal-title">Edit Prompt</h3>
+          <button id="modal-close" class="close-btn">×</button>
+        </div>
+        
+        <form id="prompt-form">
+          <div class="form-group">
+            <label for="prompt-name">Menu Name</label>
+            <input type="text" id="prompt-name" placeholder="e.g., Summarize" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="prompt-template">Prompt Template</label>
+            <textarea id="prompt-template" rows="3" placeholder="e.g., Summarize this:" required></textarea>
+            <span class="hint" id="template-hint"></span>
+          </div>
+          
+          <div class="form-group checkbox-group" id="include-url-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="prompt-include-url">
+              <span>Automatically include page URL and title</span>
+            </label>
+            <span class="hint">Or use {title} and {url} placeholders in your template</span>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" id="modal-cancel" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Trash Modal -->
+    <div id="trash-modal" class="modal hidden">
+      <div class="modal-content modal-wide">
+        <div class="modal-header">
+          <h3>Trash</h3>
+          <button id="trash-modal-close" class="close-btn">×</button>
+        </div>
+        
+        <p class="help-text">Recently deleted prompts. They will be permanently removed when you close settings.</p>
+        
+        <div id="trash-list" class="trash-list"></div>
+        <div id="trash-empty" class="empty-state">Trash is empty</div>
+        
+        <div class="form-actions">
+          <button type="button" id="empty-trash" class="btn btn-secondary">Empty Trash</button>
+          <button type="button" id="trash-done" class="btn btn-primary">Done</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Restore Defaults Confirmation Modal -->
+    <div id="confirm-modal" class="modal hidden">
+      <div class="modal-content modal-small">
+        <div class="modal-header">
+          <h3>Restore Defaults?</h3>
+          <button id="confirm-close" class="close-btn">×</button>
+        </div>
+        <p class="confirm-text">This will add back all default prompts. Your custom prompts will be kept.</p>
+        <div class="form-actions">
+          <button type="button" id="confirm-cancel" class="btn btn-secondary">Cancel</button>
+          <button type="button" id="confirm-yes" class="btn btn-primary">Restore</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal backdrop (click to close) -->
+    <div id="modal-backdrop" class="modal-backdrop hidden"></div>
+    
+    <!-- Toast notification -->
+    <div id="toast" class="toast hidden">
+      <span id="toast-message"></span>
+    </div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

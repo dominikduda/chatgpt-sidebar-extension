@@ -1,0 +1,136 @@
+/**
+ * ChatGPT Sidebar - Side Panel Styles
+ * 
+ * Styles for the main sidebar panel that embeds ChatGPT.
+ * Features a full-screen iframe with an overlay notification system.
+ * 
+ * @author toastyfawn566
+ * @version 1.3.0
+ */
+
+/* =============================================================================
+   RESET & BASE
+   ============================================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* =============================================================================
+   MAIN CONTAINER
+   ============================================================================= */
+
+#container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background: #212121;  /* Matches ChatGPT's dark theme */
+}
+
+/* =============================================================================
+   NOTIFICATION OVERLAY
+   
+   Floating notification that appears at the top when text is being pasted.
+   Uses absolute positioning so it doesn't affect the iframe layout.
+   ============================================================================= */
+
+.notification {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  max-width: 80%;
+  
+  /* Appearance */
+  background: linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%);
+  color: white;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  
+  /* Animation */
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateX(-50%) translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+#notification-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Dismiss button */
+.dismiss-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.dismiss-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* =============================================================================
+   CHATGPT IFRAME
+   
+   Full-size iframe that displays ChatGPT.
+   Positioned absolutely to fill the entire container.
+   ============================================================================= */
+
+#chatgpt-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #212121;  /* Loading background color */
+}
+
+/* =============================================================================
+   UTILITY CLASSES
+   ============================================================================= */
+
+.hidden {
+  display: none !important;
+}

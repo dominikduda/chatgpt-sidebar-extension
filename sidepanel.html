@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+  ChatGPT Sidebar - Side Panel
+  
+  The main sidebar UI that embeds ChatGPT in an iframe.
+  Features a notification overlay for paste feedback.
+  
+  @author toastyfawn566
+  @version 1.3.0
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT Sidebar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="container">
+    <!-- Notification overlay for paste feedback -->
+    <div id="notification" class="notification hidden">
+      <span id="notification-text">Text copied! Press Ctrl+V to paste</span>
+      <button id="dismiss-notification" class="dismiss-btn">×</button>
+    </div>
+    
+    <!-- ChatGPT embedded iframe -->
+    <iframe 
+      id="chatgpt-frame" 
+      src="https://chatgpt.com"
+      allow="clipboard-read; clipboard-write"
+    ></iframe>
+  </div>
+  <script src="sidepanel.js"></script>
+</body>
+</html>
